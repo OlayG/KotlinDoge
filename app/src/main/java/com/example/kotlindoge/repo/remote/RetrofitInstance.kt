@@ -18,7 +18,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
  *  var - mutable
  */
 object RetrofitInstance {
-        private const val BASE_URL = "http://shibe.online/api/"
+    private const val BASE_URL = "http://shibe.online/api/"
 
     private val client = HttpLoggingInterceptor()
         .apply {
