@@ -1,10 +1,7 @@
 package com.example.kotlindoge.viewmodel
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.kotlindoge.repo.DogeRepo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,7 +20,7 @@ class MainViewModel : ViewModel() {
         get() = _doges
 
     init {
-        val callback : Callback<List<String>> = object : Callback<List<String>> {
+        val callback: Callback<List<String>> = object : Callback<List<String>> {
             override fun onResponse(call: Call<List<String>>, response: Response<List<String>>) {
                 _doges.value = response.body()
             }
@@ -39,10 +36,13 @@ class MainViewModel : ViewModel() {
     }
 
     fun getDoges(count: Int = 10) {
-        viewModelScope.launch(Dispatchers.Main) {
+        viewModelScope.launch(Dispatchers.IO) {
             val dogeList = DogeRepo.getDoge(count)
-            _doges.value = dogeList
+            _doges.postValue(dogeList)
         }
+
     }
+
+    fun getDogesKt(count: Int = 10) = liveData { emit(DogeRepo.getDoge(count)) }
 
 }
