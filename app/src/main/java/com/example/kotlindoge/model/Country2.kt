@@ -1,9 +1,8 @@
 package com.example.kotlindoge.model
 
-import android.os.Parcelable
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import kotlinx.parcelize.Parcelize
+import java.io.Serializable
 
 /**
  * @JsonClass(generateAdapter = true)
@@ -14,10 +13,10 @@ import kotlinx.parcelize.Parcelize
  * use this if the variable name will be differnt from the json key name
  */
 
-@Parcelize // DO NOT FORGET TO ADD id 'kotlin-parcelize' to the plugins in your build.gradle(module)
 @JsonClass(generateAdapter = true)
-data class Country(
+data class Country2(
     @field:Json(name = "city_name")
     val cityName: String,
     val coordinates: List<Float>
-) : Parcelable
+) : Serializable
+// All you need to do, this is slower and uses reflection, for android we want to use Parcelable
